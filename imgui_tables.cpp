@@ -241,7 +241,7 @@ Index of this file:
 #pragma GCC diagnostic ignored "-Wstrict-overflow"
 #pragma GCC diagnostic ignored "-Wclass-memaccess"                  // [__GNUC__ >= 8] warning: 'memset/memcpy' clearing/writing an object of type 'xxxx' with no trivial copy-assignment; use assignment or value-initialization instead
 #endif
-
+IMGUI_EXTRANAMESPACE_BEGIN
 //-----------------------------------------------------------------------------
 // [SECTION] Tables: Main code
 //-----------------------------------------------------------------------------
@@ -4521,5 +4521,5 @@ void ImGui::Columns(int columns_count, const char* id, bool borders)
 }
 
 //-------------------------------------------------------------------------
-
+IMGUI_EXTRANAMESPACE_END
 #endif // #ifndef IMGUI_DISABLE

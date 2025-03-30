@@ -18,10 +18,23 @@
 #include "imgui.h"      // IMGUI_IMPL_API
 #ifndef IMGUI_DISABLE
 
+#ifdef IMGUI_EXTRANAMESPACE
+#define IMGUI_EXTRANAMESPACE_BEGIN  namespace IMGUI_EXTRANAMESPACE {
+#define IMGUI_EXTRANAMESPACE_END     }
+#define IMGUI_EXTRANAMESPACE_NAME  IMGUI_EXTRANAMESPACE
+#else
+#define IMGUI_EXTRANAMESPACE_BEGIN
+#define IMGUI_EXTRANAMESPACE_END
+#define  IMGUI_EXTRANAMESPACE_NAME
+#endif
+
+
 struct ID3D11Device;
 struct ID3D11DeviceContext;
 struct ID3D11SamplerState;
 struct ID3D11Buffer;
+
+IMGUI_EXTRANAMESPACE_BEGIN
 
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 IMGUI_IMPL_API bool     ImGui_ImplDX11_Init(ID3D11Device* device, ID3D11DeviceContext* device_context);
@@ -43,5 +56,7 @@ struct ImGui_ImplDX11_RenderState
     ID3D11SamplerState*     SamplerDefault;
     ID3D11Buffer*           VertexConstantBuffer;
 };
+
+IMGUI_EXTRANAMESPACE_END
 
 #endif // #ifndef IMGUI_DISABLE

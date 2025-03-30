@@ -66,6 +66,16 @@ Index of this file:
 
 #ifndef IMGUI_DISABLE
 
+#ifdef IMGUI_EXTRANAMESPACE
+#define IMGUI_EXTRANAMESPACE_BEGIN  namespace IMGUI_EXTRANAMESPACE {
+#define IMGUI_EXTRANAMESPACE_END     }
+#define IMGUI_EXTRANAMESPACE_NAME  IMGUI_EXTRANAMESPACE
+#else
+#define IMGUI_EXTRANAMESPACE_BEGIN
+#define IMGUI_EXTRANAMESPACE_END
+#define  IMGUI_EXTRANAMESPACE_NAME
+#endif
+
 //-----------------------------------------------------------------------------
 // [SECTION] Header mess
 //-----------------------------------------------------------------------------
@@ -95,7 +105,7 @@ Index of this file:
 #define IM_UNUSED(_VAR)             ((void)(_VAR))                              // Used to silence "unused variable warnings". Often useful as asserts may be stripped out from final builds.
 
 // Check that version and structures layouts are matching between compiled imgui code and caller. Read comments above DebugCheckVersionAndDataLayout() for details.
-#define IMGUI_CHECKVERSION()        ImGui::DebugCheckVersionAndDataLayout(IMGUI_VERSION, sizeof(ImGuiIO), sizeof(ImGuiStyle), sizeof(ImVec2), sizeof(ImVec4), sizeof(ImDrawVert), sizeof(ImDrawIdx))
+#define IMGUI_CHECKVERSION()        IMGUI_EXTRANAMESPACE_NAME::ImGui::DebugCheckVersionAndDataLayout(IMGUI_VERSION, sizeof(IMGUI_EXTRANAMESPACE_NAME::ImGuiIO), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImGuiStyle), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImVec2), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImVec4), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImDrawVert), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImDrawIdx))
 
 // Helper Macros - IM_FMTARGS, IM_FMTLIST: Apply printf-style warnings to our formatting functions.
 // (MSVC provides an equivalent mechanism via SAL Annotations but it would require the macros in a different
@@ -147,7 +157,7 @@ Index of this file:
 //-----------------------------------------------------------------------------
 // [SECTION] Forward declarations and basic types
 //-----------------------------------------------------------------------------
-
+IMGUI_EXTRANAMESPACE_BEGIN
 // Scalar data types
 typedef unsigned int        ImGuiID;// A unique ID used by widgets (typically the result of hashing a stack of string)
 typedef signed char         ImS8;   // 8-bit signed integer
@@ -2050,12 +2060,14 @@ struct ImGuiTableColumnSortSpecs
 //-----------------------------------------------------------------------------
 
 struct ImNewWrapper {};
-inline void* operator new(size_t, ImNewWrapper, void* ptr) { return ptr; }
-inline void  operator delete(void*, ImNewWrapper, void*)   {} // This is only required so we can use the symmetrical new()
-#define IM_ALLOC(_SIZE)                     ImGui::MemAlloc(_SIZE)
-#define IM_FREE(_PTR)                       ImGui::MemFree(_PTR)
-#define IM_PLACEMENT_NEW(_PTR)              new(ImNewWrapper(), _PTR)
-#define IM_NEW(_TYPE)                       new(ImNewWrapper(), ImGui::MemAlloc(sizeof(_TYPE))) _TYPE
+IMGUI_EXTRANAMESPACE_END
+inline void* operator new(size_t, IMGUI_EXTRANAMESPACE_NAME::ImNewWrapper, void* ptr) { return ptr; }
+inline void  operator delete(void*, IMGUI_EXTRANAMESPACE_NAME::ImNewWrapper, void*)   {} // This is only required so we can use the symmetrical new()
+#define IM_ALLOC(_SIZE)                    IMGUI_EXTRANAMESPACE_NAME::ImGui::MemAlloc(_SIZE)
+#define IM_FREE(_PTR)                       IMGUI_EXTRANAMESPACE_NAME::ImGui::MemFree(_PTR)
+#define IM_PLACEMENT_NEW(_PTR)              new(IMGUI_EXTRANAMESPACE_NAME::ImNewWrapper(), _PTR)
+#define IM_NEW(_TYPE)                       new(IMGUI_EXTRANAMESPACE_NAME::ImNewWrapper(), IMGUI_EXTRANAMESPACE_NAME::ImGui::MemAlloc(sizeof(_TYPE))) _TYPE
+IMGUI_EXTRANAMESPACE_BEGIN
 template<typename T> void IM_DELETE(T* p)   { if (p) { p->~T(); ImGui::MemFree(p); } }
 
 //-----------------------------------------------------------------------------
@@ -3773,5 +3785,7 @@ namespace ImGui
 #include "imgui_user.h"
 #endif
 #endif
+
+IMGUI_EXTRANAMESPACE_END
 
 #endif // #ifndef IMGUI_DISABLE

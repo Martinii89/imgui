@@ -129,6 +129,14 @@ Index of this file:
 #include "imgui.h"
 #ifndef IMGUI_DISABLE
 
+#ifdef IMGUI_EXTRANAMESPACE
+#define IMGUI_EXTRANAMESPACE_BEGIN  namespace IMGUI_EXTRANAMESPACE {
+#define IMGUI_EXTRANAMESPACE_END     }
+#else
+#define IMGUI_EXTRANAMESPACE_BEGIN
+#define IMGUI_EXTRANAMESPACE_END
+#endif
+
 // System includes
 #include <ctype.h>          // toupper
 #include <limits.h>         // INT_MIN, INT_MAX
@@ -229,6 +237,8 @@ Index of this file:
 //-----------------------------------------------------------------------------
 
 #if !defined(IMGUI_DISABLE_DEMO_WINDOWS)
+
+IMGUI_EXTRANAMESPACE_BEGIN
 
 // Forward Declarations
 struct ImGuiDemoWindowData;
@@ -10682,5 +10692,7 @@ bool ImGui::ShowStyleSelector(const char* label) { return false; }
 void ImGui::ShowFontSelector(const char* label) {}
 
 #endif
+
+IMGUI_EXTRANAMESPACE_END
 
 #endif // #ifndef IMGUI_DISABLE

@@ -20,6 +20,18 @@
 #include "imgui.h"      // IMGUI_IMPL_API
 #ifndef IMGUI_DISABLE
 
+#ifdef IMGUI_EXTRANAMESPACE
+#define IMGUI_EXTRANAMESPACE_BEGIN  namespace IMGUI_EXTRANAMESPACE {
+#define IMGUI_EXTRANAMESPACE_END     }
+#define IMGUI_EXTRANAMESPACE_NAME  IMGUI_EXTRANAMESPACE
+#else
+#define IMGUI_EXTRANAMESPACE_BEGIN
+#define IMGUI_EXTRANAMESPACE_END
+#define  IMGUI_EXTRANAMESPACE_NAME
+#endif
+
+IMGUI_EXTRANAMESPACE_BEGIN
+
 // Follow "Getting Started" link and check examples/ folder to learn about using backends!
 IMGUI_IMPL_API bool     ImGui_ImplWin32_Init(void* hwnd);
 IMGUI_IMPL_API bool     ImGui_ImplWin32_InitForOpenGL(void* hwnd);
@@ -49,5 +61,7 @@ IMGUI_IMPL_API float    ImGui_ImplWin32_GetDpiScaleForMonitor(void* monitor); //
 // - Use to enable alpha compositing transparency with the desktop.
 // - Use together with e.g. clearing your framebuffer with zero-alpha.
 IMGUI_IMPL_API void     ImGui_ImplWin32_EnableAlphaCompositing(void* hwnd);   // HWND hwnd
+
+IMGUI_EXTRANAMESPACE_END
 
 #endif // #ifndef IMGUI_DISABLE

@@ -44,6 +44,15 @@ Index of this file:
 
 #pragma once
 #ifndef IMGUI_DISABLE
+#ifdef IMGUI_EXTRANAMESPACE
+#define IMGUI_EXTRANAMESPACE_BEGIN  namespace IMGUI_EXTRANAMESPACE {
+#define IMGUI_EXTRANAMESPACE_END     }
+#define IMGUI_EXTRANAMESPACE_NAME  IMGUI_EXTRANAMESPACE
+#else
+#define IMGUI_EXTRANAMESPACE_BEGIN
+#define IMGUI_EXTRANAMESPACE_END
+#define  IMGUI_EXTRANAMESPACE_NAME
+#endif
 
 //-----------------------------------------------------------------------------
 // [SECTION] Header mess
@@ -130,7 +139,7 @@ Index of this file:
 //-----------------------------------------------------------------------------
 // [SECTION] Forward declarations
 //-----------------------------------------------------------------------------
-
+IMGUI_EXTRANAMESPACE_BEGIN
 // Utilities
 // (other types which are not forwarded declared are: ImBitArray<>, ImSpan<>, ImSpanAllocator<>, ImPool<>, ImChunkStream<>)
 struct ImBitVector;                 // Store 1-bit per value
@@ -3634,5 +3643,5 @@ extern const char*  ImGuiTestEngine_FindItemDebugLabel(ImGuiContext* ctx, ImGuiI
 #ifdef _MSC_VER
 #pragma warning (pop)
 #endif
-
+IMGUI_EXTRANAMESPACE_END
 #endif // #ifndef IMGUI_DISABLE

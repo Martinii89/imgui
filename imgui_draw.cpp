@@ -33,6 +33,13 @@ Index of this file:
 
 #include "imgui.h"
 #ifndef IMGUI_DISABLE
+#ifdef IMGUI_EXTRANAMESPACE
+#define IMGUI_EXTRANAMESPACE_BEGIN  namespace IMGUI_EXTRANAMESPACE {
+#define IMGUI_EXTRANAMESPACE_END     }
+#else
+#define IMGUI_EXTRANAMESPACE_BEGIN
+#define IMGUI_EXTRANAMESPACE_END
+#endif
 #include "imgui_internal.h"
 #ifdef IMGUI_ENABLE_FREETYPE
 #include "misc/freetype/imgui_freetype.h"
@@ -122,7 +129,7 @@ namespace IMGUI_STB_NAMESPACE
 #ifndef IMGUI_DISABLE_STB_RECT_PACK_IMPLEMENTATION          // in case the user already have an implementation in another compilation unit
 #define STBRP_STATIC
 #define STBRP_ASSERT(x)     do { IM_ASSERT(x); } while (0)
-#define STBRP_SORT          ImQsort
+#define STBRP_SORT          IMGUI_EXTRANAMESPACE_NAME::ImQsort
 #define STB_RECT_PACK_IMPLEMENTATION
 #endif
 #ifdef IMGUI_STB_RECT_PACK_FILENAME
@@ -140,9 +147,9 @@ namespace IMGUI_STB_NAMESPACE
 #define STBTT_assert(x)     do { IM_ASSERT(x); } while(0)
 #define STBTT_fmod(x,y)     ImFmod(x,y)
 #define STBTT_sqrt(x)       ImSqrt(x)
-#define STBTT_pow(x,y)      ImPow(x,y)
+#define STBTT_pow(x,y)      IMGUI_EXTRANAMESPACE_NAME::ImPow(x,y)
 #define STBTT_fabs(x)       ImFabs(x)
-#define STBTT_ifloor(x)     ((int)ImFloor(x))
+#define STBTT_ifloor(x)     ((int)IMGUI_EXTRANAMESPACE_NAME::ImFloor(x))
 #define STBTT_iceil(x)      ((int)ImCeil(x))
 #define STBTT_strlen(x)     ImStrlen(x)
 #define STBTT_STATIC
@@ -178,6 +185,8 @@ using namespace IMGUI_STB_NAMESPACE;
 //-----------------------------------------------------------------------------
 // [SECTION] Style functions
 //-----------------------------------------------------------------------------
+
+IMGUI_EXTRANAMESPACE_BEGIN
 
 void ImGui::StyleColorsDark(ImGuiStyle* dst)
 {
@@ -4827,5 +4836,5 @@ static const char* GetDefaultCompressedFontDataTTF(int* out_size)
     return (const char*)proggy_clean_ttf_compressed_data;
 }
 #endif // #ifndef IMGUI_DISABLE_DEFAULT_FONT
-
+IMGUI_EXTRANAMESPACE_END
 #endif // #ifndef IMGUI_DISABLE

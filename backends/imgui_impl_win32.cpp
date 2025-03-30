@@ -105,6 +105,8 @@ typedef DWORD(WINAPI* PFN_XInputGetState)(DWORD, XINPUT_STATE*);
 #pragma GCC diagnostic ignored "-Wcast-function-type"       // warning: cast between incompatible function types (for loader)
 #endif
 
+IMGUI_EXTRANAMESPACE_BEGIN
+
 struct ImGui_ImplWin32_Data
 {
     HWND                        hWnd;
@@ -951,6 +953,8 @@ void ImGui_ImplWin32_EnableAlphaCompositing(void* hwnd)
         ::DwmEnableBlurBehindWindow((HWND)hwnd, &bb);
     }
 }
+
+IMGUI_EXTRANAMESPACE_END
 
 //---------------------------------------------------------------------------------------------------------
 
