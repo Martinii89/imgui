@@ -94,6 +94,7 @@ Index of this file:
 #pragma GCC diagnostic ignored "-Wcast-qual"                        // warning: cast from type 'const xxxx *' to type 'xxxx *' casts away qualifiers
 #endif
 
+IMGUI_EXTRANAMESPACE_BEGIN
 //-------------------------------------------------------------------------
 // Data
 //-------------------------------------------------------------------------
@@ -10447,5 +10448,5 @@ void ImGui::TabItemLabelAndCloseButton(ImDrawList* draw_list, const ImRect& bb, 
         *out_just_closed = close_button_pressed;
 }
 
-
+IMGUI_EXTRANAMESPACE_END
 #endif // #ifndef IMGUI_DISABLE

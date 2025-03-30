@@ -1177,7 +1177,7 @@ CODE
 // Debug options
 #define IMGUI_DEBUG_NAV_SCORING     0   // Display navigation scoring preview when hovering items. Hold CTRL to display for all candidates. CTRL+Arrow to change last direction.
 #define IMGUI_DEBUG_NAV_RECTS       0   // Display the reference navigation rectangle for each window
-
+IMGUI_EXTRANAMESPACE_BEGIN
 // When using CTRL+TAB (or Gamepad Square+L/R) we delay the visual a little in order to reduce visual noise doing a fast switch.
 static const float NAV_WINDOWING_HIGHLIGHT_DELAY            = 0.20f;    // Time before the highlight and screen dimming starts fading in
 static const float NAV_WINDOWING_LIST_APPEAR_DELAY          = 0.15f;    // Time before the window list starts to appear
@@ -15074,10 +15074,11 @@ static void Platform_SetClipboardTextFn_DefaultImpl(ImGuiContext*, const char* t
         ::GlobalFree(wbuf_handle);
     ::CloseClipboard();
 }
-
+IMGUI_EXTRANAMESPACE_END
 #elif defined(__APPLE__) && TARGET_OS_OSX && defined(IMGUI_ENABLE_OSX_DEFAULT_CLIPBOARD_FUNCTIONS)
 
 #include <Carbon/Carbon.h>  // Use old API to avoid need for separate .mm file
+IMGUI_EXTRANAMESPACE_BEGIN
 static PasteboardRef main_clipboard = 0;
 
 // OSX clipboard implementation
@@ -15169,6 +15170,7 @@ static void Platform_SetClipboardTextFn_DefaultImpl(ImGuiContext* ctx, const cha
 #ifdef _MSC_VER
 #pragma comment(lib, "shell32")
 #endif
+IMGUI_EXTRANAMESPACE_BEGIN
 static bool Platform_OpenInShellFn_DefaultImpl(ImGuiContext*, const char* path)
 {
     const int path_wsize = ::MultiByteToWideChar(CP_UTF8, 0, path, -1, NULL, 0);
@@ -15177,9 +15179,11 @@ static bool Platform_OpenInShellFn_DefaultImpl(ImGuiContext*, const char* path)
     ::MultiByteToWideChar(CP_UTF8, 0, path, -1, path_wbuf.Data, path_wsize);
     return (INT_PTR)::ShellExecuteW(NULL, L"open", path_wbuf.Data, NULL, NULL, SW_SHOWDEFAULT) > 32;
 }
+IMGUI_EXTRANAMESPACE_END
 #else
 #include <sys/wait.h>
 #include <unistd.h>
+IMGUI_EXTRANAMESPACE_BEGIN
 static bool Platform_OpenInShellFn_DefaultImpl(ImGuiContext*, const char* path)
 {
 #if defined(__APPLE__)
@@ -15202,11 +15206,13 @@ static bool Platform_OpenInShellFn_DefaultImpl(ImGuiContext*, const char* path)
         return WEXITSTATUS(status) == 0;
     }
 }
+IMGUI_EXTRANAMESPACE_END
 #endif
 #else
+IMGUI_EXTRANAMESPACE_BEGIN
 static bool Platform_OpenInShellFn_DefaultImpl(ImGuiContext*, const char*) { return false; }
+IMGUI_EXTRANAMESPACE_END
 #endif // Default shell handlers
-
 //-----------------------------------------------------------------------------
 
 // Win32 API IME support (for Asian languages, etc.)
@@ -15216,7 +15222,7 @@ static bool Platform_OpenInShellFn_DefaultImpl(ImGuiContext*, const char*) { ret
 #ifdef _MSC_VER
 #pragma comment(lib, "imm32")
 #endif
-
+IMGUI_EXTRANAMESPACE_BEGIN
 static void Platform_SetImeDataFn_DefaultImpl(ImGuiContext*, ImGuiViewport* viewport, ImGuiPlatformImeData* data)
 {
     // Notify OS Input Method Editor of text input position
@@ -17057,5 +17063,5 @@ void ImGui::DebugHookIdInfo(ImGuiID, ImGuiDataType, const void*, const void*) {}
 #endif
 
 //-----------------------------------------------------------------------------
-
+IMGUI_EXTRANAMESPACE_END
 #endif // #ifndef IMGUI_DISABLE

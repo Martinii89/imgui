@@ -49,6 +49,8 @@
 #pragma comment(lib, "d3dcompiler") // Automatically link with d3dcompiler.lib as we are using D3DCompile() below.
 #endif
 
+IMGUI_EXTRANAMESPACE_BEGIN
+
 // DirectX11 data
 struct ImGui_ImplDX11_Data
 {
@@ -622,7 +624,7 @@ void ImGui_ImplDX11_NewFrame()
     if (!bd->pFontSampler)
         ImGui_ImplDX11_CreateDeviceObjects();
 }
-
+IMGUI_EXTRANAMESPACE_END
 //-----------------------------------------------------------------------------
 
 #endif // #ifndef IMGUI_DISABLE
