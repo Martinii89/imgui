@@ -105,7 +105,7 @@ Index of this file:
 #define IM_UNUSED(_VAR)             ((void)(_VAR))                              // Used to silence "unused variable warnings". Often useful as asserts may be stripped out from final builds.
 
 // Check that version and structures layouts are matching between compiled imgui code and caller. Read comments above DebugCheckVersionAndDataLayout() for details.
-#define IMGUI_CHECKVERSION()        IMGUI_EXTRANAMESPACE_NAME::ImGui::DebugCheckVersionAndDataLayout(IMGUI_VERSION, sizeof(IMGUI_EXTRANAMESPACE_NAME::ImGuiIO), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImGuiStyle), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImVec2), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImVec4), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImDrawVert), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImDrawIdx))
+#define IMGUI_CHECKVERSION()        IMGUI_EXTRANAMESPACE_NAME::ImGui::DebugCheckVersionAndDataLayout(IMGUI_VERSION, sizeof(IMGUI_EXTRANAMESPACE_NAME::ImGuiIO), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImGuiStyle), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImVec2), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImVec4), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImDrawVert), sizeof(IMGUI_EXTRANAMESPACE_NAME::ImDrawIdx_t))
 
 // Helper Macros - IM_FMTARGS, IM_FMTLIST: Apply printf-style warnings to our formatting functions.
 // (MSVC provides an equivalent mechanism via SAL Annotations but it would require the macros in a different
@@ -2973,6 +2973,7 @@ struct ImGuiSelectionExternalStorage
 #ifndef ImDrawIdx
 typedef unsigned short ImDrawIdx;   // Default: 16-bit (for maximum compatibility with renderer backends)
 #endif
+using ImDrawIdx_t = ImDrawIdx;
 
 // ImDrawCallback: Draw callbacks for advanced uses [configurable type: override in imconfig.h]
 // NB: You most likely do NOT need to use draw callbacks just to create your own widget or customized UI rendering,
